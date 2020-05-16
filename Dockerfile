@@ -14,5 +14,7 @@ RUN R -e "install.packages('R0')"
 RUN R -e "install.packages('XML')"
 RUN R -e "install.packages('jsonlite')"
 RUN R -e "install.packages('plumber', repos='https://cran.rstudio.com/')"
+RUN R -e "install.packages('ggplot2', repos='https://cran.rstudio.com/')"
+RUN R -e "install.packages('EpiEstim', repos='https://cran.rstudio.com/')"
 # start from home/docker
-WORKDIR /home/docker
+WORKDIR /home/docker/script/
