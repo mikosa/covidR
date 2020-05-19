@@ -41,7 +41,18 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
+        
+    #check if build new container
+    - uses: actions/checkout@v1
+    
+    - id: log
+      run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
       
+    - if: "!contains(steps.log.outputs.message, 'ci skip')"
+      run: |
+        docker build -f Dockerfile.base -t "$REGISTRY_HOSTNAME"/"$BASE"
+        docker push "$REGISTRY_HOSTNAME"/"$BASE"
+    
     # Build the Docker image
     - name: Build
       run: | 
