@@ -78,5 +78,6 @@ jobs:
         gcloud run services describe covidr0 \
         --platform=managed \
         --region=us-central1 \
+        --project=olibato-1543680389483 \
         --format yaml > service.yaml
         gcloud run services update covidr0
