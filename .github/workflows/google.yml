@@ -77,5 +77,6 @@ jobs:
       run: |
         gcloud run services describe covidr0 \
         --platform=managed \
+        --region=us-central1 \
         --format yaml > service.yaml
         gcloud run services update covidr0
