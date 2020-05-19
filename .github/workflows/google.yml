@@ -75,5 +75,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
-        gcloud run services describe covidr0 --format yaml > service.yaml
+        gcloud run services describe covidr0 \
+        --platform=managed \
+        --format yaml > service.yaml
         gcloud run services update covidr0
