@@ -51,7 +51,7 @@ jobs:
       
     - if: "!contains(steps.log.outputs.message, 'ci skip')"
       run: |
-        docker build -f Dockerfile.base -t "$REGISTRY_HOSTNAME"/"$BASE"
+        docker build . -f Dockerfile.base -t "$REGISTRY_HOSTNAME"/"$BASE"
         docker push "$REGISTRY_HOSTNAME"/"$BASE"
     
     # Build the Docker image
