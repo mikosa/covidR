@@ -82,7 +82,8 @@ jobs:
         --project=olibato-1543680389483 \
         --format yaml > service.yaml
         cat service.yaml
-        
+        kustomize edit set image $REGISTRY_HOSTNAME/$IMAGE=$REGISTRY_HOSTNAME/$IMAGE:$GITHUB_SHA
+        kustomize build . 
         gcloud beta run services replace service.yaml \
         --platform=managed \
         --region=us-central1 \
