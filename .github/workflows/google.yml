@@ -20,6 +20,7 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   IMAGE: olibato-1543680389483/covid19
   REGISTRY_HOSTNAME: us.gcr.io
+  BASE: olibato-1543680389483/covid19base
 
 jobs:
   setup-build-publish-deploy:
