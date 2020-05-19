@@ -49,7 +49,7 @@ jobs:
     - id: log
       run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
       
-    - if: "!contains(steps.log.outputs.message, 'ci skip')"
+    - if: "contains(steps.log.outputs.message, 'base')"
       run: |
         docker build . -f Dockerfile.base -t "$REGISTRY_HOSTNAME"/"$BASE"
         docker push "$REGISTRY_HOSTNAME"/"$BASE"

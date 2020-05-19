@@ -1,4 +1,4 @@
-FROM olibato-1543680389483/covid19base
+FROM us.gcr.io/olibato-1543680389483/covid19base
 COPY . /home/docker/script
 # start from home/docker
 WORKDIR /home/docker/script/
