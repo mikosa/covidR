@@ -76,6 +76,7 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
+        chmod u+x kustomize
         ls
         pwd
         gcloud run services describe covidr0 \
