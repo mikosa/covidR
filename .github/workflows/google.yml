@@ -42,6 +42,7 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
+        gcloud components install beta
         
     #check if build new container
     - uses: actions/checkout@v1
