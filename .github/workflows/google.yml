@@ -16,14 +16,9 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
-  GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
   GITHUB_SHA: ${{ github.sha }}
-  GKE_ZONE: us-west1-a
-  GKE_CLUSTER: example-gke-cluster
-  IMAGE: gke-test
-  REGISTRY_HOSTNAME: gcr.io
-  DEPLOYMENT_NAME: gke-test
+  IMAGE: olibato-1543680389483/covid19
+  REGISTRY_HOSTNAME: us.gcr.io
 
 jobs:
   setup-build-publish-deploy:
@@ -38,7 +33,7 @@ jobs:
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '270.0.0'
-        service_account_email: ${{ secrets.GKE_EMAIL }}
+        service_account_email: github-action@olibato-1543680389483.iam.gserviceaccount.com
         service_account_key: ${{ secrets.GKE_KEY }}
 
     # Configure docker to use the gcloud command-line tool as a credential helper
@@ -57,7 +52,7 @@ jobs:
     # Push the Docker image to Google Container Registry
     - name: Publish
       run: |
-        docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
+        docker push $REGISTRY_HOSTNAME/$IMAGE:$GITHUB_SHA
         
     # Set up kustomize
     - name: Set up Kustomize
@@ -68,4 +63,5 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |
+        gcloud run services describe covidr0 --format yaml > service.yaml
         gcloud run services update covidr0
