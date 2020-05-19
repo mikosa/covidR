@@ -46,8 +46,8 @@ jobs:
     #check if build new container
     - uses: actions/checkout@v1
     
-    - id: log
-      run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+    # - id: log
+    #   run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
       
     - if: "contains(steps.log.outputs.message, 'base')"
       run: |
@@ -56,8 +56,7 @@ jobs:
     
     # Build the Docker image
     - name: Build
-      run: | 
-        docker pull "$REGISTRY_HOSTNAME"/"$IMAGE"        
+      run: |        
         docker build -t "$REGISTRY_HOSTNAME"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
