@@ -1,0 +1,28 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: covidr0
+  namespace: '331426608829'
+  labels:
+    cloud.googleapis.com/location: us-central1
+spec:
+  traffic:
+  - percent: 100
+    latestRevision: true
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/client-name: cloud-console
+        autoscaling.knative.dev/maxScale: '1000'
+    spec:
+      timeoutSeconds: 300
+      serviceAccountName: 331426608829-compute@developer.gserviceaccount.com
+      containerConcurrency: 80
+      containers:
+      - image: us.gcr.io/olibato-1543680389483/covid19
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 512Mi
