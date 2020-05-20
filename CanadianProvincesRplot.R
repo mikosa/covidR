@@ -21,30 +21,30 @@ Canadaallinone<-rep(NA,col-scrap+1)
  # Canadaallinone[i]<-sum(Canadaallprovinces[1:11,i])
 #}
 #v<-Canadaallinone[1:106]
-#start100<-min(which(cumsum(v)>5))
-#start150<-min(which(cumsum(v)>100))
-#x<-est.R0.ML(v[16:106],mGT,range=c(0.01,50))
-
-#x<-est.R0.ML(v[start100:106],mGT, range=c(0.01,50))
-#w<-as.numeric(dailynewcases[45,scrap:col])
-#start100<-min(which(cumsum(w)>=1))
-#start150<-min(which(cumsum(w)>150))
-#x<-est.R0.ML(w[48:106],mGT,unknown.GT = TRUE)
-#z<-as.numeric(dailynewcases[37,scrap:col])
-#start100<-min(which(cumsum(z)>=150))
-#start150<-min(which(cumsum(z)>150))
-#x<-est.R0.SB(z[41:106],mGT,range=c(0.01,50),time.step = 1)
-#SB<-est.R0.TD(z[41:106],mGT)
-#dailynewcases[36,scrap:col]
-#dailynewcases[,1:2]<-as.character(dailynewcases[,1:2])
-#Changed dailynewcases[43,80]=0 from -7(Ontario)
-dailynewcases[43,80]=0
-#Changed dailynewcases[36,68]=0 from -1(Alberta)
-dailynewcases[36,68]=0
-#Changed dailynewcases[39,86]=0 from -1 (Manitoba)
-dailynewcases[39,86]=0
-#Changed dailynewcases[39,111]=0 from -3 (Manitoba)
-dailynewcases[39,111]=0
+v<-rep(NA,nrow(df))
+for(i in 1:nrow(df)){
+if(sum(as.numeric(dailynewcases[i,scrap:col])<0)>0)
+  {v[i]<-i}
+  
+}
+#omitting NA values
+w<-na.omit(v)
+dailynewcases[w,1:2]
+x<-as.numeric(dailynewcases[1,scrap:col])
+for (i in w){
+  x<-as.numeric(dailynewcases[i,scrap:col])
+  y<-which(x<0)
+  u<-rep(1,length(y))
+  m<-pmax(y-30,u)
+  w<-x[y]
+  x[y]<-round((x[y+1]+x[y-1])/2)
+  for ( j in 1:length(y)){
+    t<-w[j]
+    coeff<-t/sum(x[m[j]:(y[j]-1)])
+    x[m[j]:(y[j]-1)]<-round((1+coeff)*x[m[j]:(y[j]-1)])
+  }
+  dailynewcases[i,scrap:col]<-x
+}
 PlotRwithconfint<-function(Province,Country)
 {
   
