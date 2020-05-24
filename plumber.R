@@ -14,7 +14,7 @@ function(msg=""){
 #* @png
 
 function(Province="", Country=""){
- source("CanadianProvincesRplot.R")
+ source("PlotREpiestim.R")
  plot(PlotRwithconfint(Province, Country))
  #png(filename = "mtcars.png")
 # list(msg = paste0("The message is: '", msg, "'"))
