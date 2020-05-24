@@ -1,4 +1,6 @@
-
+library(EpiEstim)
+library(ggplot2)
+source("datacleaning.R")
 PlotRwithconfint<-function(Country,Province)
 {
   
